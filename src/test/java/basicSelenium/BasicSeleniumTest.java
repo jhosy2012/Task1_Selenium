@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Keys;
 
 import java.util.Date;
 
@@ -67,32 +68,21 @@ public class BasicSeleniumTest {
         driver.findElement(By.id("NewItemContentInput")).sendKeys(nameTask);
         driver.findElement(By.id("NewItemAddButton")).click();
         Thread.sleep(1000);
-        actualResult=driver.findElements(By.xpath(" //td[text()='"+nameTask+"'] ")).size();
+        actualResult=driver.findElements(By.xpath(" //div[text()='"+nameTask+"'] ")).size();
         Assertions.assertTrue(actualResult >= 1
                 ,"ERROR The project was not created");
 
-        nameTask = "SharonUpdateTask";
+        String updateNameTask = "SharonUpdateTask";
         //updateTask
-        driver.findElement(By.xpath("//div[contains(@style,'ItemMenu')]/img")).click();
-        driver.findElement(By.xpath("//ul[@id=\"projectContextMenu\"]//a[text()='Edit']")).click();
-        driver.findElement(By.xpath("//td/div/input[@id='ItemEditTextbox']")).clear();
-        driver.findElement(By.xpath("//td/div/input[@id='ItemEditTextbox']")).sendKeys(nameTask);
-        driver.findElement(By.xpath("//td/div/img[@id='ItemEditSubmit']")).click();
+        driver.findElement(By.xpath("//td[@class='ItemContent']/div[text()='" + nameTask + "']")).click();
+        driver.findElement(By.xpath("//td//textarea[@id='ItemEditTextbox']")).clear();
+        driver.findElement(By.xpath("//td//textarea[@id='ItemEditTextbox']")).sendKeys(updateNameTask);
+        driver.findElement(By.xpath("//td//textarea[@id='ItemEditTextbox']")).sendKeys(Keys.RETURN);
         Thread.sleep(1000);
-        actualResult=driver.findElements(By.xpath(" //td[text()='"+nameTask+"'] ")).size();
+        actualResult=driver.findElements(By.xpath(" //td[@class='ItemContent']/div[text()='"+updateNameTask+"'] ")).size();
         Assertions.assertTrue(actualResult >= 1
-                ,"ERROR The project was not updated");
+                ,"ERROR The project was not updated");//*/
 
-
-
-        // delete
-        //driver.findElement(By.xpath("//div[contains(@style,'block')]/img")).click();
-        //driver.findElement(By.id("ProjShareMenuDel")).click();
-        //driver.switchTo().alert().accept();
-        //Thread.sleep(1000);
-        //actualResult=driver.findElements(By.xpath(" //td[text()='"+nameProject+"'] ")).size();
-        //Assertions.assertTrue(actualResult == 0
-        //      ,"ERROR The project was not removed");
 
     }
 }
